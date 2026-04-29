@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Constellation — A Rutgers-Newark Guide to Connection</title>
+  <meta name="description" content="A student-built guide to finding your people and accelerating your relationships at Rutgers University-Newark, inspired by Connections are Everything.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=DM+Sans:opsz,wght@9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0E1F;
+      --bg-2: #131836;
+      --surface: #1A1F3D;
+      --surface-hi: #232a4a;
+      --ink: #F0E9DC;
+      --ink-2: #B8B4A8;
+      --ink-3: #7B7F95;
+      --gold: #E8B86E;
+      --gold-dim: #A38755;
+      --line: rgba(240, 233, 220, 0.12);
+      --line-strong: rgba(240, 233, 220, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Stars background — fixed, subtle */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .stars svg { width: 100%; height: 100%; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .star { animation: twinkle 4s ease-in-out infinite; }
+
+    /* Layout */
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Type */
+    h1, h2, h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    }
+
+    h1 {
+      font-size: clamp(56px, 9vw, 128px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-variation-settings: 'opsz' 144, 'SOFT' 80;
+      color: var(--gold);
+    }
+
+    h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    h3 {
+      font-size: 28px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    p { color: var(--ink-2); }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      transition: all 0.2s ease;
+    }
+
+    a:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 0 80px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 48px;
+    }
+
+    .hero h1 { margin-bottom: 32px; max-width: 14ch; }
+
+    .hero-sub {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(20px, 2.4vw, 28px);
+      line-height: 1.4;
+      color: var(--ink-2);
+      max-width: 60ch;
+      margin-bottom: 48px;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .hero-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      max-width: 700px;
+    }
+
+    .hero-meta span { display: flex; flex-direction: column; gap: 4px; }
+    .hero-meta strong { color: var(--ink); font-weight: 500; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--ink-3);
+      text-transform: uppercase;
+    }
+
+    /* Sections */
+    section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .pull {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.25;
+      color: var(--ink);
+      max-width: 28ch;
+      margin: 80px auto;
+      padding: 0 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .pull::before, .pull::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto;
+    }
+
+    .pull cite {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-style: normal;
+      letter-spacing: 0.15em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-top: 24px;
+    }
+
+    /* Intro section */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .intro-grid p {
+      font-size: 19px;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .intro-grid p:first-of-type {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--ink);
+      font-weight: 300;
+    }
+
+    /* People (Part II) — three cards */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 36px 32px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .person-card:hover {
+      background: var(--surface-hi);
+      border-color: var(--line-strong);
+      transform: translateY(-2px);
+    }
+
+    .person-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 64px;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .person-card h3 { margin-bottom: 8px; }
+
+    .person-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 24px;
+    }
+
+    .person-card .why {
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 24px;
+      color: var(--ink-2);
+    }
+
+    .person-card ul {
+      list-style: none;
+      padding: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .person-card li {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      color: var(--ink-2);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .person-card li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--gold-dim);
+      font-size: 8px;
+      top: 6px;
+    }
+
+    .person-card li strong {
+      color: var(--ink);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Email template box */
+    .template {
+      margin-top: 72px;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--gold);
+      padding: 40px;
+      max-width: 720px;
+    }
+
+    .template-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .template h4 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .template > p {
+      font-size: 14px;
+      color: var(--ink-3);
+      margin-bottom: 24px;
+    }
+
+    .template pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ink);
+      white-space: pre-wrap;
+      background: rgba(0,0,0,0.25);
+      padding: 24px;
+      border-radius: 2px;
+    }
+
+    .template-fill { color: var(--gold); font-style: italic; }
+
+    /* Accelerators table (Part III) */
+    .table-wrap {
+      margin-top: 56px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 20px 24px;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--line);
+      font-weight: 500;
+    }
+
+    .table td {
+      padding: 24px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .table tr:last-child td { border-bottom: none; }
+
+    .table tr:hover td { background: var(--surface-hi); }
+
+    .hip-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 19px;
+      color: var(--ink);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .hip-name em { font-style: italic; color: var(--gold); }
+
+    .hip-why { color: var(--ink-2); }
+    .hip-where strong { color: var(--ink); display: block; margin-bottom: 4px; font-weight: 500; }
+    .hip-where { color: var(--ink-2); font-size: 14px; }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 140px 0;
+    }
+
+    .cta h2 { margin: 0 auto 24px; max-width: 16ch; }
+
+    .cta-sub {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--ink-2);
+      max-width: 50ch;
+      margin: 0 auto 64px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .action {
+      padding: 40px 24px;
+      border-right: 1px solid var(--line);
+      text-align: left;
+    }
+
+    .action:last-child { border-right: none; }
+
+    .action-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .action h4 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .action p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+
+    /* Footer */
+    footer {
+      padding: 80px 0 60px;
+      border-top: 1px solid var(--line);
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+
+    .footer-grid h5 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .footer-grid p, .footer-grid li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-2);
+    }
+
+    .footer-grid ul { list-style: none; }
+    .footer-grid li { margin-bottom: 8px; }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Hero constellation lines — draw on load */
+    @keyframes line-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    .stars svg g[stroke] line {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: line-draw 1.8s ease-out 0.4s forwards;
+    }
+
+    /* Hero text fade-up */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero .hero-eyebrow,
+    .hero h1,
+    .hero-sub,
+    .hero-meta {
+      opacity: 0;
+      animation: fade-up 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    .hero .hero-eyebrow { animation-delay: 0.1s; }
+    .hero h1 { animation-delay: 0.25s; }
+    .hero-sub { animation-delay: 0.45s; }
+    .hero-meta { animation-delay: 0.65s; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .stars svg g[stroke] line { stroke-dashoffset: 0; animation: none; }
+      .hero .hero-eyebrow, .hero h1, .hero-sub, .hero-meta {
+        opacity: 1; animation: none;
+      }
+    }
+
+    /* Copy button on email template */
+    .template-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .template-head .template-label { margin-bottom: 0; }
+    .copy-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
+    .copy-btn.copied {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
+
+    /* Constellation builder */
+    .builder-intro {
+      max-width: 60ch;
+      font-size: 18px;
+      margin-bottom: 56px;
+    }
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .builder-canvas {
+      position: sticky;
+      top: 60px;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      padding: 32px;
+      aspect-ratio: 8 / 5;
+    }
+    .builder-canvas svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .b-star {
+      fill: var(--ink-3);
+      cursor: pointer;
+      transition: fill 0.4s ease, r 0.3s ease, filter 0.4s ease;
+    }
+    .b-star:hover { fill: var(--ink-2); }
+    .b-star.lit {
+      fill: var(--gold);
+      filter: drop-shadow(0 0 8px rgba(232, 184, 110, 0.7));
+    }
+    .b-edge {
+      stroke: var(--gold);
+      stroke-width: 0.8;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    .b-edge.lit { opacity: 0.45; }
+    .b-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      fill: var(--ink-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .builder-options {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .builder-cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-top: 24px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+    .builder-cat:first-child { margin-top: 0; }
+
+    .builder-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease;
+    }
+    .builder-option:hover { color: var(--ink); }
+    .builder-option input {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      margin-top: 4px;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .builder-option input:hover { border-color: var(--gold-dim); }
+    .builder-option input:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .builder-option input:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 4px;
+      height: 8px;
+      border: solid var(--bg);
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+    }
+    .builder-option span {
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--ink-2);
+    }
+    .builder-option input:checked + span { color: var(--ink); }
+
+    .builder-readout {
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .builder-count-box {
+      font-family: 'Fraunces', Georgia, serif;
+      text-align: center;
+    }
+    .builder-count {
+      font-size: 96px;
+      line-height: 1;
+      color: var(--gold);
+      font-style: italic;
+      font-variation-settings: 'opsz' 144, 'SOFT' 80;
+      display: block;
+    }
+    .builder-count-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: normal;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-top: 8px;
+    }
+    .builder-text {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(20px, 2.4vw, 26px);
+      line-height: 1.45;
+      color: var(--ink);
+      max-width: 38ch;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Mobile */
+    @media (max-width: 860px) {
+      body { font-size: 16px; }
+      .wrap { padding: 0 24px; }
+      section { padding: 80px 0; }
+      .intro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .people-grid { grid-template-columns: 1fr; }
+      .actions { grid-template-columns: 1fr; }
+      .action { border-right: none; border-bottom: 1px solid var(--line); }
+      .action:last-child { border-bottom: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .table th, .table td { padding: 16px; font-size: 14px; }
+      .table th:nth-child(2), .table td:nth-child(2) { display: none; }
+      .hero-meta { flex-direction: column; gap: 16px; }
+      .pull { margin: 60px auto; }
+      .template { padding: 28px 20px; }
+      .template pre { padding: 16px; font-size: 12px; }
+      .template-head { flex-direction: column; gap: 12px; }
+      .builder-grid { grid-template-columns: 1fr; gap: 32px; }
+      .builder-canvas { position: relative; top: 0; padding: 20px; }
+      .builder-readout { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+      .builder-text { max-width: none; }
+      .builder-count { font-size: 72px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Twinkling stars background -->
+<div class="stars" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <g fill="#F0E9DC">
+      <circle class="star" cx="120" cy="80" r="1" style="animation-delay: 0s"/>
+      <circle class="star" cx="280" cy="160" r="1.5" style="animation-delay: 0.5s"/>
+      <circle class="star" cx="440" cy="60" r="1" style="animation-delay: 1.2s"/>
+      <circle class="star" cx="680" cy="200" r="1" style="animation-delay: 0.8s"/>
+      <circle class="star" cx="920" cy="120" r="1.8" style="animation-delay: 2s"/>
+      <circle class="star" cx="1180" cy="80" r="1" style="animation-delay: 1.5s"/>
+      <circle class="star" cx="1340" cy="220" r="1.2" style="animation-delay: 0.3s"/>
+      <circle class="star" cx="60" cy="320" r="1" style="animation-delay: 2.4s"/>
+      <circle class="star" cx="380" cy="380" r="1.4" style="animation-delay: 1.8s"/>
+      <circle class="star" cx="780" cy="420" r="1" style="animation-delay: 0.6s"/>
+      <circle class="star" cx="1080" cy="360" r="1.6" style="animation-delay: 2.8s"/>
+      <circle class="star" cx="1280" cy="480" r="1" style="animation-delay: 1.1s"/>
+      <circle class="star" cx="200" cy="540" r="1" style="animation-delay: 3s"/>
+      <circle class="star" cx="520" cy="600" r="1.2" style="animation-delay: 0.2s"/>
+      <circle class="star" cx="840" cy="660" r="1" style="animation-delay: 2.2s"/>
+      <circle class="star" cx="1140" cy="620" r="1.5" style="animation-delay: 1.6s"/>
+      <circle class="star" cx="100" cy="780" r="1" style="animation-delay: 0.9s"/>
+      <circle class="star" cx="460" cy="820" r="1" style="animation-delay: 2.6s"/>
+      <circle class="star" cx="720" cy="760" r="1.3" style="animation-delay: 1.4s"/>
+      <circle class="star" cx="1020" cy="840" r="1" style="animation-delay: 0.4s"/>
+      <circle class="star" cx="1320" cy="780" r="1" style="animation-delay: 3.2s"/>
+    </g>
+    <!-- A subtle constellation: connecting a few stars -->
+    <g stroke="#E8B86E" stroke-width="0.4" opacity="0.4" fill="none">
+      <line x1="280" y1="160" x2="440" y2="60"/>
+      <line x1="440" y1="60" x2="680" y2="200"/>
+      <line x1="680" y1="200" x2="920" y2="120"/>
+      <line x1="920" y1="120" x2="1080" y2="360"/>
+      <line x1="1080" y1="360" x2="780" y2="420"/>
+      <line x1="780" y1="420" x2="380" y2="380"/>
+      <line x1="380" y1="380" x2="280" y2="160"/>
+    </g>
+  </svg>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">A Rutgers-Newark Field Guide ⋆ Spring 2026</div>
+    <h1>Build Your <em>Constellation.</em></h1>
+    <p class="hero-sub">
+      You don't go to college alone. You go with the people you find there — and the experiences that put you in the same room with them. This is a guide to both, at RU-N.
+    </p>
+    <div class="hero-meta">
+      <span><strong>Inspired by</strong>Connections are Everything<br>by Peter Felten &amp; Leo M. Lambert</span>
+      <span><strong>Built for</strong>RU-N students<br>who want a place to start</span>
+      <span><strong>Two parts</strong>Your people<br>Your accelerators</span>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</section>
+
+<!-- INTRO / WHY -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Why this matters</div>
+    <div class="intro-grid">
+      <div>
+        <h2>College isn't just <em>what</em> you take. It's <em>who</em> you take it with.</h2>
+      </div>
+      <div>
+        <p>The thesis of <em>Connections are Everything</em> is simple and a little uncomfortable: students who thrive in college don't just get good grades. They build a small constellation of people — peers, professors, and staff — who notice them, push them, and open doors.</p>
+        <p>The good news is that this constellation is buildable. You don't need to be charming, well-connected, or already certain about your major. You need to be willing to show up to one office, one conversation, one experience. Then another. Then another.</p>
+        <p>This site is two things at once. The first half is about the <strong>people</strong> already on this campus who are paid (and often eager) to know you. The second half is about the <strong>experiences</strong> — what the research calls High-Impact Practices — that put you in close enough range of those people that real relationships can form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pull">
+  "It was not cheating to use college resources."
+  <cite>Connections are Everything · Chapter 2</cite>
+</div>
+
+<!-- PART II — PEOPLE -->
+<section id="people">
+  <div class="wrap">
+    <div class="eyebrow">Part II ⋆ Your people</div>
+    <h2>Three kinds of people. <em>One you.</em></h2>
+    <p style="max-width: 60ch; font-size: 18px; margin-bottom: 16px;">
+      Felten and Lambert argue that thriving students cultivate three kinds of relationships in college. Here's what each looks like at Rutgers-Newark, and where to actually find them.
+    </p>
+
+    <div class="people-grid">
+
+      <!-- PEERS -->
+      <article class="person-card">
+        <span class="person-num">i.</span>
+        <h3>Peers</h3>
+        <div class="person-tag">Your future classmates</div>
+        <p class="why">The students sitting next to you in class are the future colleagues, collaborators, and friends most likely to shape your career. The book's advice: stop waiting to be approached.</p>
+        <ul>
+          <li>
+            <strong>Raiderlink</strong>
+            <a href="https://raiderlink.newark.rutgers.edu/" target="_blank" rel="noopener">Browse 100+ student organizations</a> — the fastest way to find people who care about what you care about.
+          </li>
+          <li>
+            <strong>Honors Living-Learning Community</strong>
+            <a href="https://hllc.newark.rutgers.edu/" target="_blank" rel="noopener">HLLC</a> — a residential cohort built around social-justice scholarship.
+          </li>
+          <li>
+            <strong>Honors College</strong>
+            <a href="https://www.newark.rutgers.edu/academics/undergraduate-study/honors-experience" target="_blank" rel="noopener">Apply or learn more</a> — interdisciplinary cohort with built-in research mentors.
+          </li>
+          <li>
+            <strong>Office of Student Life &amp; Leadership</strong>
+            <a href="https://studentaffairs.newark.rutgers.edu/campus-life-events/student-life-leadership/student-organizations" target="_blank" rel="noopener">Get involved</a> — they'll help you start a club if yours doesn't exist.
+          </li>
+        </ul>
+      </article>
+
+      <!-- PROFESSORS -->
+      <article class="person-card">
+        <span class="person-num">ii.</span>
+        <h3>Professors</h3>
+        <div class="person-tag">Your would-be mentors</div>
+        <p class="why">The single most underused resource in college: office hours. Professors are required to hold them, often sit there alone, and almost always remember the students who come.</p>
+        <ul>
+          <li>
+            <strong>Your syllabus</strong>
+            Every syllabus lists office hours. That's the door. You don't need an appointment or a "real" reason — "I wanted to introduce myself" is enough.
+          </li>
+          <li>
+            <strong>Path2Success</strong>
+            <a href="https://www.newark.rutgers.edu/academics/undergraduate-study/academic-support" target="_blank" rel="noopener">RU-N's roadmap</a> from first year through senior year, with prompts for when to talk to whom.
+          </li>
+          <li>
+            <strong>Email template</strong>
+            Use the template below. It removes 90% of the awkwardness of reaching out cold.
+          </li>
+        </ul>
+      </article>
+
+      <!-- STAFF -->
+      <article class="person-card">
+        <span class="person-num">iii.</span>
+        <h3>Staff</h3>
+        <div class="person-tag">Your campus navigators</div>
+        <p class="why">The people who actually know how the university works. Advisors, counselors, career staff. They handle hundreds of students and almost never get visited by ones who aren't in crisis.</p>
+        <ul>
+          <li>
+            <strong>Academic Advising</strong>
+            <a href="https://myrun.newark.rutgers.edu/academic-advisement" target="_blank" rel="noopener">Find yours</a> — assigned to you when you enroll. Required check-in once a year, recommended once a semester.
+          </li>
+          <li>
+            <strong>Career Resources &amp; Exploration</strong>
+            <a href="https://careers.newark.rutgers.edu/" target="_blank" rel="noopener">CRE in Engelhard 101</a> — résumé reviews, career fairs, mock interviews, free professional clothing through CareerThreads.
+          </li>
+          <li>
+            <strong>RU-N Counseling Center</strong>
+            <a href="https://counseling.newark.rutgers.edu/" target="_blank" rel="noopener">Free &amp; confidential</a> — short-term counseling, group therapy, psychiatric services for any RU-N student.
+          </li>
+          <li>
+            <strong>P3 Collaboratory</strong>
+            <a href="https://www.p3.rutgers.edu/" target="_blank" rel="noopener">In Dana Library</a> — runs Mentoring Matters and connects students to faculty mentors across the university.
+          </li>
+        </ul>
+      </article>
+
+    </div>
+
+    <!-- Email template -->
+    <div class="template">
+      <div class="template-head">
+        <div class="template-label">Tool ⋆ Copy &amp; paste</div>
+        <button class="copy-btn" type="button" aria-label="Copy email template">Copy template</button>
+      </div>
+      <h4>Email template: reaching out to a professor for the first time</h4>
+      <p>The hardest email you'll write all semester. This works for office hours, research opportunities, or just an introduction.</p>
+<pre>Subject: Student in your <span class="template-fill">[course / dept]</span> — quick question
+
+Dear Professor <span class="template-fill">[Last Name]</span>,
+
+I'm <span class="template-fill">[Your Name]</span>, a <span class="template-fill">[year]</span> majoring in <span class="template-fill">[major]</span>
+at Rutgers-Newark. I'm currently taking your <span class="template-fill">[course]</span>, and
+<span class="template-fill">[one specific thing — a reading, a lecture moment, a question]</span>
+made me want to learn more.
+
+Would it be okay if I came to your office hours on
+<span class="template-fill">[day from syllabus]</span>? I'd love to <span class="template-fill">[ask about / hear
+your thoughts on]</span> <span class="template-fill">[topic]</span>.
+
+Thank you for your time.
+
+Best,
+<span class="template-fill">[Your Name]</span>
+<span class="template-fill">[RUID, if relevant]</span></pre>
+    </div>
+
+  </div>
+</section>
+
+<div class="pull">
+  "Relationships are not a resource you have, they are an environment you grow in."
+  <cite>Connections are Everything · Chapter 9</cite>
+</div>
+
+<!-- PART III — ACCELERATORS -->
+<section id="accelerators">
+  <div class="wrap">
+    <div class="eyebrow">Part III ⋆ Your accelerators</div>
+    <h2>The fastest way to a constellation: <em>do hard things together.</em></h2>
+    <p style="max-width: 60ch; font-size: 18px;">
+      Decades of education research point to a small set of experiences — High-Impact Practices, or HIPs — that consistently change students' lives. The reason isn't magic. It's that these experiences put you in sustained, real-stakes contact with a small group of people for long enough that relationships actually form. Here's where each one lives at RU-N.
+    </p>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 28%">High-Impact Practice</th>
+            <th style="width: 36%">How it builds your constellation</th>
+            <th style="width: 36%">Where to access it at RU-N</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="hip-name">Learning <em>communities</em></td>
+            <td class="hip-why">A built-in cohort that takes courses together over a year or more. The closest thing to a guaranteed friend group on a commuter campus.</td>
+            <td class="hip-where">
+              <strong>HLLC</strong>
+              <a href="https://hllc.newark.rutgers.edu/" target="_blank" rel="noopener">hllc.newark.rutgers.edu</a><br>
+              <strong>Honors College</strong>
+              <a href="https://www.newark.rutgers.edu/academics/undergraduate-study/honors-experience" target="_blank" rel="noopener">honors experience</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="hip-name">Undergraduate <em>research</em></td>
+            <td class="hip-why">One-on-one time with a faculty mentor over a real project. The single most reliable way to turn a professor into a long-term reference and advocate.</td>
+            <td class="hip-where">
+              <strong>Honors College senior thesis</strong>
+              <a href="https://www.newark.rutgers.edu/academics/undergraduate-study/honors-experience" target="_blank" rel="noopener">honors thesis program</a><br>
+              <strong>Department-based research</strong>
+              Ask any professor whose work interests you — most have lab or project openings.
+            </td>
+          </tr>
+          <tr>
+            <td class="hip-name">Internships <em>&amp; jobs</em></td>
+            <td class="hip-why">A workplace gives you a built-in cast of supervisors and co-workers. The book's point: every internship is also a mentor-finding mission.</td>
+            <td class="hip-where">
+              <strong>Handshake (RU-N)</strong>
+              <a href="https://careers.newark.rutgers.edu/resources/rutgers-newark-handshake/" target="_blank" rel="noopener">log in with NetID</a><br>
+              <strong>Scarlet Service Internship</strong>
+              <a href="https://careers.newark.rutgers.edu/" target="_blank" rel="noopener">civic-engagement program</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="hip-name">Service <em>learning</em></td>
+            <td class="hip-why">Course-credit work in the Newark community. RU-N's Anchor Mission puts these experiences at the center of campus life, not the edge.</td>
+            <td class="hip-where">
+              <strong>Office of Global Initiatives &amp; Experiential Learning</strong>
+              <a href="https://globalexp.newark.rutgers.edu/" target="_blank" rel="noopener">globalexp.newark.rutgers.edu</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="hip-name">Study <em>away</em></td>
+            <td class="hip-why">Two weeks abroad with the same eight people creates relationships you can't get in a 14-week semester. Often more affordable than students assume.</td>
+            <td class="hip-where">
+              <strong>RU-N Global Initiatives</strong>
+              <a href="https://globalexp.newark.rutgers.edu/" target="_blank" rel="noopener">embedded &amp; intercession programs</a><br>
+              <strong>Rutgers Global</strong>
+              <a href="https://global.rutgers.edu/study-abroad" target="_blank" rel="noopener">full study-abroad portal</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="hip-name">Capstone <em>projects</em></td>
+            <td class="hip-why">A senior-year project that synthesizes everything you've learned, almost always under a single faculty advisor. The natural endpoint of a research-mentor relationship.</td>
+            <td class="hip-where">
+              <strong>Within your major</strong>
+              Most departments require or offer a capstone — ask your major advisor in junior year.<br>
+              <strong>Honors thesis</strong>
+              <a href="https://www.newark.rutgers.edu/academics/undergraduate-study/honors-experience" target="_blank" rel="noopener">two-semester project</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE: MAP YOUR SKY -->
+<section id="builder">
+  <div class="wrap">
+    <div class="eyebrow">Self-assessment ⋆ Map your sky</div>
+    <h2>Where is your <em>constellation</em> right now?</h2>
+    <p class="builder-intro">
+      Check what's already true for you. Each one lights a star. Watch the lines form between them. There's no score to win — the point is to see where the gaps are, so the next step gets obvious.
+    </p>
+
+    <div class="builder-grid">
+      <div class="builder-canvas">
+        <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" aria-label="Your interactive constellation">
+          <!-- Edges (drawn first so stars sit on top) -->
+          <g class="b-edges">
+            <line class="b-edge" data-a="1" data-b="2" x1="130" y1="100" x2="240" y2="60"/>
+            <line class="b-edge" data-a="2" data-b="3" x1="240" y1="60" x2="380" y2="130"/>
+            <line class="b-edge" data-a="3" data-b="4" x1="380" y1="130" x2="490" y2="80"/>
+            <line class="b-edge" data-a="4" data-b="5" x1="490" y1="80" x2="640" y2="160"/>
+            <line class="b-edge" data-a="5" data-b="6" x1="640" y1="160" x2="730" y2="240"/>
+            <line class="b-edge" data-a="6" data-b="10" x1="730" y1="240" x2="620" y2="410"/>
+            <line class="b-edge" data-a="10" data-b="9" x1="620" y1="410" x2="470" y2="380"/>
+            <line class="b-edge" data-a="9" data-b="8" x1="470" y1="380" x2="310" y2="340"/>
+            <line class="b-edge" data-a="8" data-b="7" x1="310" y1="340" x2="140" y2="280"/>
+            <line class="b-edge" data-a="7" data-b="1" x1="140" y1="280" x2="130" y2="100"/>
+            <line class="b-edge" data-a="3" data-b="8" x1="380" y1="130" x2="310" y2="340"/>
+            <line class="b-edge" data-a="4" data-b="9" x1="490" y1="80" x2="470" y2="380"/>
+          </g>
+
+          <!-- Stars -->
+          <g class="b-stars">
+            <circle class="b-star" data-id="1" cx="130" cy="100" r="6"/>
+            <circle class="b-star" data-id="2" cx="240" cy="60" r="6"/>
+            <circle class="b-star" data-id="3" cx="380" cy="130" r="6"/>
+            <circle class="b-star" data-id="4" cx="490" cy="80" r="6"/>
+            <circle class="b-star" data-id="5" cx="640" cy="160" r="6"/>
+            <circle class="b-star" data-id="6" cx="730" cy="240" r="6"/>
+            <circle class="b-star" data-id="7" cx="140" cy="280" r="6"/>
+            <circle class="b-star" data-id="8" cx="310" cy="340" r="6"/>
+            <circle class="b-star" data-id="9" cx="470" cy="380" r="6"/>
+            <circle class="b-star" data-id="10" cx="620" cy="410" r="6"/>
+          </g>
+
+          <!-- Region labels -->
+          <text class="b-label" x="130" y="40">Peers</text>
+          <text class="b-label" x="490" y="50">Faculty &amp; Staff</text>
+          <text class="b-label" x="140" y="465">Accelerators</text>
+        </svg>
+      </div>
+
+      <div class="builder-options">
+        <div class="builder-cat">Peers</div>
+        <label class="builder-option">
+          <input type="checkbox" data-id="1">
+          <span>I know a few classmates by name and have studied together at least once.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="2">
+          <span>I'm in at least one student organization or learning community.</span>
+        </label>
+
+        <div class="builder-cat">Faculty &amp; staff</div>
+        <label class="builder-option">
+          <input type="checkbox" data-id="3">
+          <span>I've gone to a professor's office hours this year.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="4">
+          <span>At least one professor knows me by name and would write me a recommendation.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="5">
+          <span>I've met with my academic advisor in the last twelve months.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="6">
+          <span>I've used Career Resources, the Counseling Center, or another support office.</span>
+        </label>
+
+        <div class="builder-cat">Accelerators</div>
+        <label class="builder-option">
+          <input type="checkbox" data-id="7">
+          <span>I've worked on a research project with a faculty mentor.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="8">
+          <span>I've completed an internship or substantial work experience.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="9">
+          <span>I've taken a study-away or service-learning experience.</span>
+        </label>
+        <label class="builder-option">
+          <input type="checkbox" data-id="10">
+          <span>I'm part of HLLC, Honors College, or a similar cohort program.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="builder-readout">
+      <div class="builder-count-box">
+        <span class="builder-count">0</span>
+        <div class="builder-count-label">of ten</div>
+      </div>
+      <p class="builder-text">Your sky is starlight scattered. Every constellation in this book began exactly here.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content: center;">If you only do one thing</div>
+    <h2>Start with <em>one.</em></h2>
+    <p class="cta-sub">
+      Felten and Lambert open the book with this argument and close with it: every great college constellation began with a single person reaching out. Pick one this week.
+    </p>
+    <div class="actions">
+      <div class="action">
+        <span class="action-num">No. 1 — This week</span>
+        <h4>Email a professor.</h4>
+        <p>Use the template above. Pick the class you find most interesting, find their office hours on the syllabus, and send the message. It takes ten minutes and changes nothing if it goes badly.</p>
+      </div>
+      <div class="action">
+        <span class="action-num">No. 2 — This month</span>
+        <h4>Visit one office.</h4>
+        <p>Career Resources &amp; Exploration, your academic advisor, the Counseling Center, or the P3 Collaboratory. Walk in. Ask what they do. You'll be surprised how much.</p>
+      </div>
+      <div class="action">
+        <span class="action-num">No. 3 — This semester</span>
+        <h4>Sign up for one HIP.</h4>
+        <p>An internship via Handshake, a study-away program through Global Initiatives, a service-learning course, or a research role with a professor. One experience is enough to start.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h5>About this guide</h5>
+        <p>Built by an RU-N student as the final project for a Spring 2026 book club on <em>Connections are Everything</em> by Peter Felten and Leo M. Lambert (Johns Hopkins University Press, 2023). Designed to be shared, copied, and improved.</p>
+        <p style="margin-top: 12px; font-size: 13px; color: var(--ink-3);">Not an official Rutgers University–Newark publication. All linked resources belong to their respective offices.</p>
+      </div>
+      <div>
+        <h5>Quick links</h5>
+        <ul>
+          <li><a href="https://myrun.newark.rutgers.edu/" target="_blank" rel="noopener">MyRUN — student services hub</a></li>
+          <li><a href="https://raiderlink.newark.rutgers.edu/" target="_blank" rel="noopener">Raiderlink — student orgs</a></li>
+          <li><a href="https://careers.newark.rutgers.edu/" target="_blank" rel="noopener">Career Resources &amp; Exploration</a></li>
+          <li><a href="https://counseling.newark.rutgers.edu/" target="_blank" rel="noopener">Counseling Center</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>From the book</h5>
+        <ul>
+          <li>Ch. 1 — Start with one</li>
+          <li>Ch. 2 — Using resources isn't cheating</li>
+          <li>Chs. 4–6 — Peers, professors, staff</li>
+          <li>Ch. 7 — High-Impact Practices</li>
+          <li>Ch. 9 — Your relationship constellation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>RU-N ⋆ Spring 2026</span>
+      <span>Build your constellation.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-triggered reveals (skips hero, which has its own fade-up)
+  (function() {
+    const targets = document.querySelectorAll(
+      'section:not(.hero) > .wrap > *, .pull'
+    );
+    targets.forEach(el => el.classList.add('reveal'));
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    targets.forEach(el => io.observe(el));
+  })();
+
+  // Constellation builder
+  (function() {
+    const selected = new Set();
+    const messages = [
+      "Your sky is starlight scattered. Every constellation in this book began exactly here.",
+      "First star. The hardest one is always the one you've already lit.",
+      "Two stars. A line is starting to suggest itself.",
+      "Three stars. The shape of a pattern.",
+      "A constellation is taking form. The fastest next step is usually the smallest — an email, a drop-in, an office hour.",
+      "Halfway. You're somewhere in the middle of the journey the book describes.",
+      "Six stars. Most students never get this far. The remaining ones tend to be the most rewarding.",
+      "Your sky is mostly lit. Research, study away, capstone work — these are the stars that change you most.",
+      "Eight stars. You've built something real here. Look back at where you started.",
+      "Nine stars. You're nearly the version of a student this book is about.",
+      "Your constellation is complete. Now you might be the person someone else's sky needs."
+    ];
+
+    function render() {
+      const stars = document.querySelectorAll('.b-star');
+      const edges = document.querySelectorAll('.b-edge');
+      stars.forEach(star => {
+        const id = parseInt(star.dataset.id, 10);
+        star.classList.toggle('lit', selected.has(id));
+      });
+      edges.forEach(edge => {
+        const a = parseInt(edge.dataset.a, 10);
+        const b = parseInt(edge.dataset.b, 10);
+        edge.classList.toggle('lit', selected.has(a) && selected.has(b));
+      });
+      const n = selected.size;
+      const countEl = document.querySelector('.builder-count');
+      const textEl = document.querySelector('.builder-text');
+      if (countEl) countEl.textContent = n;
+      if (textEl) {
+        textEl.style.opacity = '0';
+        setTimeout(() => {
+          textEl.textContent = messages[n] || messages[0];
+          textEl.style.opacity = '1';
+        }, 200);
+      }
+    }
+
+    function toggle(id, checked) {
+      if (checked) selected.add(id); else selected.delete(id);
+      render();
+    }
+
+    document.querySelectorAll('.builder-option input').forEach(input => {
+      input.addEventListener('change', e => {
+        toggle(parseInt(e.target.dataset.id, 10), e.target.checked);
+      });
+    });
+
+    // Click stars directly to toggle
+    document.querySelectorAll('.b-star').forEach(star => {
+      star.addEventListener('click', () => {
+        const id = parseInt(star.dataset.id, 10);
+        const input = document.querySelector(
+          '.builder-option input[data-id="' + id + '"]'
+        );
+        if (input) {
+          input.checked = !input.checked;
+          toggle(id, input.checked);
+        }
+      });
+    });
+  })();
+
+  // Copy email template to clipboard
+  (function() {
+    const btn = document.querySelector('.copy-btn');
+    const pre = document.querySelector('.template pre');
+    if (!btn || !pre) return;
+
+    btn.addEventListener('click', async () => {
+      const text = pre.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy template';
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        btn.textContent = 'Press Ctrl+C';
+        setTimeout(() => { btn.textContent = 'Copy template'; }, 2000);
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
